@@ -1,0 +1,30 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationBarTitleText": "肺炎行程查询"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "condition": {
+    "current": 1,
+    "list": [
+      {
+        "name": "home",
+        "path": "pages/index"
+      },
+      {
+        "name": "home_with_travels",
+        "path": "pages/index",
+        "query": "travels=t123,t12"
+      }
+    ]
+  }
+}
