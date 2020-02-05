@@ -1,3 +1,4 @@
+// 行程
 export class Travel {
   constructor({place}) {
     this.place = place

@@ -21,7 +21,6 @@
 <script>
 
   import { Travel } from '../domains/travel-query/value-objects/travel';
-  import { OverlapTravelQuery } from '../domains/travel-query/services/overlap-travel-query';
   import NcovPatientTravel from '../components/ncov-patient-travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
   import { TravelService } from '../domains/travel-query/services/travel';
@@ -75,7 +74,7 @@
         return this.travel.place.toUpperCase()
       },
       overlapPatientTravels() {
-        return OverlapTravelQuery.query(this.travel)
+        return TravelService.overlappedPatientTravels(this.travel)
       },
       src() {
         return this.subscribed ? (this.showUnsubscribeIcon ? "/static/cancel.png" : "") : "/static/subscribe.png"

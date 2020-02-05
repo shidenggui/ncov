@@ -41,11 +41,11 @@ class NotifyService {
     const batch = Math.ceil(total / 1000)
     for (let i = 0; i < batch; i++) {
       const {data: subscriptions} = await this.subscriptionCollection.skip(i * MAX_RECORD_LIMIT).limit(MAX_RECORD_LIMIT).get()
-      await this.notifyBySubscriptions(subscriptions, patientTravelsMap)
+      await this._notifyBySubscriptions(subscriptions, patientTravelsMap)
     }
   }
 
-  async notifyBySubscriptions(subscriptions, patientTravelsMap) {
+  async _notifyBySubscriptions(subscriptions, patientTravelsMap) {
     // Convert subscription to place => subscription map
     const subscriptionMap = new Map();
     for (const subscription of subscriptions) {
@@ -60,7 +60,7 @@ class NotifyService {
       for (const patientPlace of patientTravelsMap.keys()) {
         if (patientPlace.includes(subscribedPlace)) {
           for (const subscription of subscriptionMap.get(subscribedPlace)) {
-            tasks.push(this.notifySubscriber(subscription, patientTravelsMap.get(patientPlace)))
+            tasks.push(this._notifySubscriber(subscription, patientTravelsMap.get(patientPlace)))
           }
         }
       }
@@ -68,7 +68,7 @@ class NotifyService {
     await Promise.all(tasks)
   }
 
-  async notifySubscriber(subscription, patientTravel) {
+  async _notifySubscriber(subscription, patientTravel) {
     try {
       await this._sendTemplateMessage(subscription, patientTravel)
     } catch (e) {

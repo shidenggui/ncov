@@ -6,7 +6,7 @@ cloud.init({
 })
 
 
-// 所有订阅行程
+// 获取用户所有订阅
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
   const subscriptionCollection = cloud.database().collection('subscriptions')

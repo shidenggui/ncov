@@ -6,7 +6,7 @@ cloud.init({
 })
 
 
-// 订阅行程
+// 订阅行程通知历史
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
   const notifyHistoryCollection = cloud.database().collection('notify_history')
