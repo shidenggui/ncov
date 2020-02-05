@@ -23,6 +23,7 @@
 
   import { PatientTravel } from '../domains/travel-query/value-objects/patient-travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
+  import { TravelRepository } from '../domains/travel-query/repositories/travel';
 
   export default {
     props: ["plainPatientTravel"],
@@ -32,16 +33,14 @@
     created() {
       this.patientTravel = new PatientTravel(this.plainPatientTravel)
     },
-    mounted() {
-      console.log(this.patientTravel)
-    },
     methods: {
-      copy() {
+      async copy() {
         UiService.setClipboardData(this.patientTravel.link)
         setTimeout(
           () => UiService.showToast('来源链接已经复制到剪切板，可粘贴到浏览器打开'),
           100
         )
+        await TravelRepository.subscribe(this.patientTravel)
       }
     },
     computed: {

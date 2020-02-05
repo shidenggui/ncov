@@ -1,18 +1,25 @@
 <script>
-	export default {
-		onLaunch: function() {
-			console.log('App Launch')
-		},
-		onShow: function() {
-			console.log('App Show')
-		},
-		onHide: function() {
-			console.log('App Hide')
-		}
-	}
+
+  import * as settings from './domains/infrastructure/settings';
+
+  export default {
+    onLaunch: function () {
+      console.log('App Launch')
+      wx.cloud.init({
+        env: settings.CLOUD_ENV,
+        traceUser: true,
+      })
+    },
+    onShow: function () {
+      console.log('App Show')
+    },
+    onHide: function () {
+      console.log('App Hide')
+    }
+  }
 </script>
 
 <style>
-	/*每个页面公共css */
+  /*每个页面公共css */
   @import "theme/tailwind/tailwind.css";
 </style>

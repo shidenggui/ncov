@@ -18,7 +18,6 @@
     <ncov-travel v-for="travel in travels"
                  :plain-travel="travel"
                  :key="travel.place"
-                 @remove="removeTravel"
     ></ncov-travel>
   </div>
 </template>
@@ -70,11 +69,7 @@
     },
     methods: {
       addTravel() {
-        let [exists, allTravels] = TravelService.create(new Travel({place: this.place.trim()}))
-        this.travels = allTravels
-        if (exists) {
-          UiService.showToast('行程已存在')
-        }
+        this.travels = TravelService.create(new Travel({place: this.place.trim()}))
         this.place = ''
         console.log(this.travels)
       },

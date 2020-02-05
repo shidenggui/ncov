@@ -1,8 +1,5 @@
 export class Travel {
-  constructor({time, type, place}) {
-    if (typeof time === 'string')
-      time = new Date(time)
-    this.time = time
+  constructor({place}) {
     this.place = place
   }
 

@@ -5,6 +5,12 @@
       "style": {
         "navigationBarTitleText": "肺炎行程查询"
       }
+    },
+    {
+      "path": "pages/subscriptions",
+      "style": {
+        "navigationBarTitleText": "肺炎行程订阅"
+      }
     }
   ],
   "globalStyle": {
@@ -12,6 +18,26 @@
     "navigationBarTitleText": "uni-app",
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#4caf50",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index",
+        "iconPath": "static/search.png",
+        "selectedIconPath": "static/search-selected.png",
+        "text": "查询"
+      },
+      {
+        "pagePath": "pages/subscriptions",
+        "iconPath": "static/subscriptions.png",
+        "selectedIconPath": "static/subscriptions-selected.png",
+        "text": "订阅"
+      }
+    ]
   },
   "condition": {
     "current": 1,
@@ -24,6 +50,10 @@
         "name": "home_with_travels",
         "path": "pages/index",
         "query": "travels=t123,t12"
+      },
+      {
+        "name": "subscriptions",
+        "path": "pages/subscriptions"
       }
     ]
   }
