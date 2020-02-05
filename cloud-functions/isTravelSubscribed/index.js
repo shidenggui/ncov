@@ -8,13 +8,13 @@ cloud.init({
 // 查询是否订阅行程
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
-  const travelsCollection = cloud.database().collection('travels')
+  const subscriptionCollection = cloud.database().collection('subscriptions')
 
   const searchConditions = {
     userId: openid,
     place: event.place
   }
-  const {total} = await travelsCollection.where(searchConditions).count()
+  const {total} = await subscriptionCollection.where(searchConditions).count()
 
   return {
     subscribed: Boolean(total)

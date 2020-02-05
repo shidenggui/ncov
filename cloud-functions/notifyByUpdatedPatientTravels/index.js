@@ -7,11 +7,11 @@ cloud.init({
 })
 
 const PATIENT_TRAVELS_API = 'https://2019ncov.nosugartech.com/data.json'
+const NOTIFY_HISTORY_PAGE = '/pages/history'
+const SUBSCRIPTION_TEMPLATE_ID = 'MCzQFLhTOFQuyfzKtzTKqw8pfPulOSQlhC7EIWa40g0'
 const DATE_LENGTH = 10
 const MAX_RECORD_LIMIT = 1000
 const MAX_TEMPLATE_MESSAGE = 20
-const SUBSCRIPTIONS_PAGE = '/pages/subscriptions'
-const SUBSCRIPTION_TEMPLATE_ID = 'MCzQFLhTOFQuyfzKtzTKqw8pfPulOSQlhC7EIWa40g0'
 
 async function fetchPatientTravels() {
   const response = await axios.get(PATIENT_TRAVELS_API)
@@ -19,9 +19,30 @@ async function fetchPatientTravels() {
 }
 
 class NotifyService {
-  constructor(cloud, travelsCollection) {
+  constructor(cloud, subscriptionCollection, notifyHistoryCollection) {
     this.cloud = cloud
-    this.travelsCollection = travelsCollection
+    this.subscriptionCollection = subscriptionCollection
+    this.notifyHistoryCollection = notifyHistoryCollection
+  }
+
+  async run(time, patientTravels) {
+    // Filter today patient travels
+    const today = time.toISOString().slice(0, DATE_LENGTH)
+    patientTravels = patientTravels.filter(t => t.created_at.replace('/', '-').slice(0, DATE_LENGTH) >= today)
+
+    // Convert to place => travel map
+    const patientTravelsMap = new Map();
+    for (const patientTravel of patientTravels) {
+      patientTravelsMap.set(patientTravel.t_no.toLowerCase(), patientTravel)
+    }
+
+    // Notify Users
+    const {total} = await this.subscriptionCollection.count()
+    const batch = Math.ceil(total / 1000)
+    for (let i = 0; i < batch; i++) {
+      const {data: subscriptions} = await this.subscriptionCollection.skip(i * MAX_RECORD_LIMIT).limit(MAX_RECORD_LIMIT).get()
+      await this.notifyBySubscriptions(subscriptions, patientTravelsMap)
+    }
   }
 
   async notifyBySubscriptions(subscriptions, patientTravelsMap) {
@@ -55,14 +76,19 @@ class NotifyService {
       return
     }
 
-    this.travelsCollection.where({
-      userId: subscription.userId,
-      place: subscription.place
-    }).update({
+    // Create notify history
+    await this.notifyHistoryCollection.add({
       data: {
-        notifiedAt: new Date()
+        ...subscription,
+        createdAt: new Date()
       }
     })
+
+    // Remove notified subscription
+    await this.subscriptionCollection.where({
+      userId: subscription.userId,
+      place: subscription.place
+    }).remove()
   }
 
   // 发送订阅消息
@@ -81,7 +107,7 @@ class NotifyService {
 
     await this.cloud.openapi.subscribeMessage.send({
       touser: subscription.userId,
-      page: SUBSCRIPTIONS_PAGE,
+      page: NOTIFY_HISTORY_PAGE,
       data: templateData,
       templateId: SUBSCRIPTION_TEMPLATE_ID,
     });
@@ -107,27 +133,12 @@ exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
   const db = cloud.database()
   const _ = db.command
-  const travelsCollection = db.collection('travels')
+  const subscriptionCollection = cloud.database().collection('subscriptions')
+  const notifyHistoryCollection = cloud.database().collection('notify_history')
 
-  // Fetch today patient travels
-  const now = new Date()
-  const today = now.toISOString().slice(0, DATE_LENGTH)
+
+  const notifyService = new NotifyService(cloud, subscriptionCollection, notifyHistoryCollection)
+
   let patientTravels = await fetchPatientTravels()
-  patientTravels = patientTravels.filter(t => t.created_at.replace('/', '-').slice(0, DATE_LENGTH) >= today)
-
-  // Convert to place => travel map
-  const patientTravelsMap = new Map();
-  for (const patientTravel of patientTravels) {
-    patientTravelsMap.set(patientTravel.t_no.toLowerCase(), patientTravel)
-  }
-
-
-  // Notify User
-  const notifyService = new NotifyService(cloud, travelsCollection)
-  const {total} = await travelsCollection.count()
-  const batch = Math.ceil(total / 1000)
-  for (let i = 0; i < batch; i++) {
-    const {data: subscriptions} = await travelsCollection.skip(i * MAX_RECORD_LIMIT).limit(MAX_RECORD_LIMIT).get()
-    await notifyService.notifyBySubscriptions(subscriptions, patientTravelsMap)
-  }
+  await notifyService.run(new Date(), patientTravels)
 }

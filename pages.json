@@ -11,6 +11,12 @@
       "style": {
         "navigationBarTitleText": "肺炎行程订阅"
       }
+    },
+    {
+      "path": "pages/history",
+      "style": {
+        "navigationBarTitleText": "历史通知"
+      }
     }
   ],
   "globalStyle": {
@@ -36,6 +42,12 @@
         "iconPath": "static/subscriptions.png",
         "selectedIconPath": "static/subscriptions-selected.png",
         "text": "订阅"
+      },
+      {
+        "pagePath": "pages/history",
+        "iconPath": "static/list.png",
+        "selectedIconPath": "static/list-selected.png",
+        "text": "历史通知"
       }
     ]
   },

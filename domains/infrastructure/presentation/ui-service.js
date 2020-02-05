@@ -4,7 +4,7 @@ export class UiService {
   }
 
   static showLoading() {
-    uni.showLoading({title: '加载数据', mush: true})
+    uni.showLoading({title: '加载中'})
   }
 
   static hideLoading() {

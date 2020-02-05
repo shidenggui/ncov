@@ -15,10 +15,14 @@ export class CloudService {
   }
 
   static isTravelSubscribed(travel) {
-    return this.callFunction('isTravelSubscribed', travel).then(r => r.subscribed)
+    return this.callFunction('isTravelSubscribed', travel)
   }
 
   static travelSubscriptions() {
-    return this.callFunction('travelSubscriptions').then(r => r.results)
+    return this.callFunction('travelSubscriptions')
+  }
+
+  static notifyHistory() {
+    return this.callFunction('notifyHistory')
   }
 }

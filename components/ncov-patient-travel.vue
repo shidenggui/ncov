@@ -23,7 +23,6 @@
 
   import { PatientTravel } from '../domains/travel-query/value-objects/patient-travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
-  import { TravelRepository } from '../domains/travel-query/repositories/travel';
 
   export default {
     props: ["plainPatientTravel"],

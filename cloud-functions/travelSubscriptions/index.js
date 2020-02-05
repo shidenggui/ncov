@@ -9,14 +9,14 @@ cloud.init({
 // 所有订阅行程
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
-  const travelsCollection = cloud.database().collection('travels')
+  const subscriptionCollection = cloud.database().collection('subscriptions')
 
   const searchConditions = {
     userId: openid,
   }
-  const result = await travelsCollection.where(searchConditions).get()
+  const {data: subscriptions} = await subscriptionCollection.where(searchConditions).orderBy('createdAt', 'desc').get()
 
   return {
-    results: result.data,
+    results: subscriptions,
   }
 }

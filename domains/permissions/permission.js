@@ -3,14 +3,14 @@ import { SUBSCRIPTION_TEMPLATE_ID } from '../infrastructure/settings';
 export class PermissionService {
   static requireSubscribe() {
     return new Promise((resolve, reject) => {
-      console.log('Start require subscribe')
+      console.log('Start require subscribe permission')
       wx.requestSubscribeMessage({
         tmplIds: [SUBSCRIPTION_TEMPLATE_ID],
         success(res) {
-          if (res.errMsg === 'requestSubscribeMessage:ok') {
+          console.log(res)
+          if (res.errMsg === 'requestSubscribeMessage:ok' && res[SUBSCRIPTION_TEMPLATE_ID] === 'accept') {
             resolve()
           } else {
-            console.log(res)
             reject(res)
           }
         },

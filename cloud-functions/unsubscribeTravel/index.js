@@ -9,16 +9,15 @@ cloud.init({
 // 订阅行程
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
-  const travelsCollection = cloud.database().collection('travels')
+  const subscriptionCollection = cloud.database().collection('subscriptions')
 
   const deleteConditions = {
     userId: openid,
     place: event.place
   }
-  const result = await travelsCollection.where(deleteConditions).remove()
+  const result = await subscriptionCollection.where(deleteConditions).remove()
 
   return {
     result,
-    openid: openid
   }
 }

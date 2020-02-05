@@ -9,7 +9,7 @@ cloud.init({
 // 订阅行程
 exports.main = async (event, context) => {
   const {OPENID: openid} = cloud.getWXContext()
-  const travelsCollection = cloud.database().collection('travels')
+  const subscriptionCollection = cloud.database().collection('subscriptions')
 
   const createConditions = {
     userId: openid,
@@ -17,14 +17,12 @@ exports.main = async (event, context) => {
   }
 
   let result = null;
-  const {total} = await travelsCollection.where(createConditions).count()
+  const {total} = await subscriptionCollection.where(createConditions).count()
   if (!total) {
-    const now = new Date()
-    result = await travelsCollection.add({
+    result = await subscriptionCollection.add({
       data: {
         ...createConditions,
-        createdAt: now,
-        notifiedAt: now,
+        createdAt: new Date(),
       }
     })
   }

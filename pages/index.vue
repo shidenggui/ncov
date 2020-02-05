@@ -18,13 +18,13 @@
     <ncov-travel v-for="travel in travels"
                  :plain-travel="travel"
                  :key="travel.place"
+                 :show-unsubscribe-icon="false"
     ></ncov-travel>
   </div>
 </template>
 
 <script>
   import NcovTravel from '../components/ncov-travel';
-  import { MOCK_TRAVELS } from '../mock/mock-travels';
   import { Travel } from '../domains/travel-query/value-objects/travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
   import { TravelRepository } from '../domains/travel-query/repositories/travel';
@@ -34,10 +34,9 @@
   export default {
     components: {NcovTravel},
     data() {
-      let initTravels = false ? MOCK_TRAVELS : TravelRepository.list()
       return {
         place: '',
-        travels: initTravels,
+        travels: TravelRepository.list(),
         placeHolder: '高铁、航班、公交、地铁、地点'
       }
     },
@@ -69,14 +68,10 @@
     },
     methods: {
       addTravel() {
+        if (this.place === '') return
         this.travels = TravelService.create(new Travel({place: this.place.trim()}))
         this.place = ''
         console.log(this.travels)
-      },
-      removeTravel(deletedTravel) {
-        console.log(deletedTravel)
-        TravelRepository.delete(deletedTravel)
-        this.travels = TravelRepository.list()
       }
     }
   }
