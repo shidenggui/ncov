@@ -24,6 +24,8 @@
   import { OverlapTravelQuery } from '../domains/travel-query/services/overlap-travel-query';
   import NcovPatientTravel from '../components/ncov-patient-travel';
   import { TravelRepository } from '../domains/travel-query/repositories/travel';
+  import { UiService } from '../domains/infrastructure/presentation/ui-service';
+  import { TravelService } from '../domains/travel-query/services/travel';
 
   export default {
     props: ["plainTravel"],
@@ -45,9 +47,16 @@
       },
       async toggleSubscribe() {
         if (this.subscribed) {
-          TravelRepository.unsubscribe(this.travel)
+          await TravelRepository.unsubscribe(this.travel)
+          UiService.showToast('取消订阅成功')
         } else {
-          TravelRepository.subscribe(this.travel)
+          try {
+            await TravelService.subscribe(this.travel)
+          } catch (e) {
+            UiService.showToast('订阅失败')
+            return
+          }
+          UiService.showToast('订阅成功')
         }
 
         this.subscribed = !this.subscribed

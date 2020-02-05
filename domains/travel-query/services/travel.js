@@ -1,4 +1,5 @@
 import { TravelRepository } from '../repositories/travel';
+import { PermissionService } from '../../permissions/permission';
 
 export class TravelService {
   static TRAVELS_KEY = 'travels'
@@ -13,5 +14,10 @@ export class TravelService {
 
     TravelRepository.replaceAll(travels)
     return travels
+  }
+
+  static async subscribe(travel) {
+    await PermissionService.requireSubscribe()
+    await TravelRepository.subscribe(travel)
   }
 }

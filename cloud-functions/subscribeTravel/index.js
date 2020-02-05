@@ -19,8 +19,13 @@ exports.main = async (event, context) => {
   let result = null;
   const {total} = await travelsCollection.where(createConditions).count()
   if (!total) {
+    const now = new Date()
     result = await travelsCollection.add({
-      data: createConditions
+      data: {
+        ...createConditions,
+        createdAt: now,
+        notifiedAt: now,
+      }
     })
   }
 

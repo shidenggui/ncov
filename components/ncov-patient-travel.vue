@@ -40,7 +40,6 @@
           () => UiService.showToast('来源链接已经复制到剪切板，可粘贴到浏览器打开'),
           100
         )
-        await TravelRepository.subscribe(this.patientTravel)
       }
     },
     computed: {
