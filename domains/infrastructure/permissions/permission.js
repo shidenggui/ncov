@@ -40,7 +40,7 @@ export class PermissionService {
         withSubscriptions: true,
         success(res) {
           console.log(res)
-          if (!res.subscriptionsSetting.mainSwitch) resolve({})
+          if (!res.subscriptionsSetting || !res.subscriptionsSetting.mainSwitch) resolve({})
           resolve(res.subscriptionsSetting.itemSettings || {})
         },
         fail(res) {

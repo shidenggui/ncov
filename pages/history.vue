@@ -15,6 +15,7 @@
 <script>
   import NcovTravel from '../components/ncov-travel';
   import { SubscriptionRepository } from '../domains/travel-query/repositories/subscription';
+  import { UiService } from '../domains/infrastructure/presentation/ui-service';
 
   export default {
     components: {NcovTravel},
@@ -24,7 +25,10 @@
       }
     },
     async onShow() {
+      UiService.showLoading()
       this.travels = await SubscriptionRepository.notifyHistory()
+      UiService.hideLoading()
+
       console.log(this.travels)
     },
     methods: {}
