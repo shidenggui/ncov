@@ -23,7 +23,7 @@
 
   import { PatientTravel } from '../domains/travel-query/value-objects/patient-travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
-  import { UiUtils } from '../domains/infrastructure/presentation/ui-utils';
+  import { TimeUtils } from '../domains/infrastructure/presentation/time-utils';
 
   export default {
     props: ["plainPatientTravel"],
@@ -44,7 +44,7 @@
     },
     computed: {
       displayOfTime() {
-        return UiUtils.Date(this.patientTravel.time)
+        return TimeUtils.Date(this.patientTravel.time)
       }
     }
   };
