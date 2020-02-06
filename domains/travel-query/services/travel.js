@@ -1,5 +1,5 @@
 import { TravelRepository } from '../repositories/travel';
-import { PermissionService } from '../../permissions/permission';
+import { PermissionService } from '../../infrastructure/permissions/permission';
 import { SubscriptionRepository } from '../repositories/subscription';
 import { PatientTravelRepository } from '../repositories/patient-travel';
 
