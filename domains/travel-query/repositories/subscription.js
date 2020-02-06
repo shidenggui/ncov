@@ -20,7 +20,6 @@ export class SubscriptionRepository {
 
   static async isSubscribed(travel) {
     let {subscribed} = await CloudService.isTravelSubscribed(travel)
-    console.log(subscribed)
     return subscribed
   }
 
