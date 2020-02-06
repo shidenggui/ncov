@@ -1,6 +1,6 @@
 export class UiService {
   static showToast(title) {
-    uni.showToast({title: title, icon: 'none', duration: 2500})
+    uni.showToast({title: title, icon: 'none', duration: 2000})
   }
 
   static showLoading() {

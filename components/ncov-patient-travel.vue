@@ -7,7 +7,7 @@
         {{ displayOfTime }}
       </div>
       <div class="w-1--2 text-center">
-        {{ displayOfPlace }}
+        {{ patientTravel.place }}
       </div>
     </div>
     <div class="detail text-sm text-gray-600 text-center">
@@ -23,6 +23,7 @@
 
   import { PatientTravel } from '../domains/travel-query/value-objects/patient-travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';
+  import { UiUtils } from '../domains/infrastructure/presentation/ui-utils';
 
   export default {
     props: ["plainPatientTravel"],
@@ -43,10 +44,7 @@
     },
     computed: {
       displayOfTime() {
-        return this.patientTravel.time.toISOString().slice(5, 10)
-      },
-      displayOfPlace() {
-        return this.patientTravel.place
+        return UiUtils.Date(this.patientTravel.time)
       }
     }
   };
