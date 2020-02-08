@@ -9,6 +9,29 @@
 * 后端框架：基于云开发，6 个云函数加 1 个触发器
 * 架构：使用领域驱动设计（DDD）
 
+## 结果展示
+
+### 查询患者行程
+
+- 点击右上角的按钮订阅对应的行程通知
+- 点击患者行程可以复制来源链接到浏览器中打开
+
+
+![](https://gitee.com/shidenggui/assets/raw/master/uPic/1.%20查询.jpeg)
+
+### 订阅界面
+
+![](https://gitee.com/shidenggui/assets/raw/master/uPic/2.%20订阅.jpeg)
+
+### 订阅提醒
+
+![3.提醒](https://gitee.com/shidenggui/assets/raw/master/uPic/3.%20提醒.jpeg)
+
+### 历史通知
+
+![4.历史通知](https://gitee.com/shidenggui/assets/raw/master/uPic/4.%20历史通知.jpeg)
+
+
 ## 目录结构
 
 ```
