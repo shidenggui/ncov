@@ -1,6 +1,6 @@
 <script>
 
-  import * as settings from './domains/infrastructure/settings';
+  import * as settings from './settings';
 
   export default {
     onLaunch: function () {

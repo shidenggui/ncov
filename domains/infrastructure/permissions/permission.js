@@ -1,4 +1,4 @@
-import { SUBSCRIPTION_TEMPLATE_ID } from '../settings';
+import { SUBSCRIPTION_TEMPLATE_ID } from '../../../settings';
 
 export class PermissionService {
   static async requireSubscribe() {
