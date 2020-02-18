@@ -24,6 +24,7 @@
 </template>
 
 <script>
+  // 首页，用于查询行程以及订阅
   import NcovTravel from '../components/ncov-travel';
   import { Travel } from '../domains/travel-query/value-objects/travel';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';

@@ -1,12 +1,13 @@
+// 患者行程服务类
 import { TravelRepository } from '../repositories/travel';
 import { PermissionService } from '../../infrastructure/permissions/permission';
 import { SubscriptionRepository } from '../repositories/subscription';
 import { PatientTravelRepository } from '../repositories/patient-travel';
 
 export class TravelService {
-  static TRAVELS_KEY = 'travels'
   static MAX_SEARCH_HISTORY = 10
 
+  // 创建查询行程
   static create(createdTravel) {
     let travels = TravelRepository.list()
 
@@ -18,6 +19,7 @@ export class TravelService {
     return travels
   }
 
+  // 订阅行程
   static async subscribe(travel) {
     await PermissionService.requireSubscribe()
     await SubscriptionRepository.subscribe(travel)

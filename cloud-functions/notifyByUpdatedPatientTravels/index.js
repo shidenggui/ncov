@@ -18,6 +18,7 @@ async function fetchPatientTravels() {
   return response.data.data
 }
 
+// 订阅用户通知服务
 class NotifyService {
   constructor(cloud, subscriptionCollection, notifyHistoryCollection) {
     this.cloud = cloud

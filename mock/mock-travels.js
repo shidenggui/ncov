@@ -1,5 +1,6 @@
 import { Travel } from '../domains/travel-query/value-objects/travel';
 
+// 测试的行程数据
 export const MOCK_TRAVELS = [
   new Travel({
       time: new Date('2020-01-29'),

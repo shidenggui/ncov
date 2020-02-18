@@ -1,3 +1,4 @@
+// 测试的患者行程数据
 export const mockData = {
   "code": 0,
   "msg": "",

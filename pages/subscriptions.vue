@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  // 订阅页，可查看以及取消订阅
   import NcovTravel from '../components/ncov-travel';
   import { SubscriptionRepository } from '../domains/travel-query/repositories/subscription';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';

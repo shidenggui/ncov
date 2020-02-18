@@ -13,6 +13,7 @@
 </template>
 
 <script>
+  // 历史订阅通知界面
   import NcovTravel from '../components/ncov-travel';
   import { SubscriptionRepository } from '../domains/travel-query/repositories/subscription';
   import { UiService } from '../domains/infrastructure/presentation/ui-service';

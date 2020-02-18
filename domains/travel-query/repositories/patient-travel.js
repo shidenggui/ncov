@@ -1,3 +1,4 @@
+// 患者行程的存储层
 import { PatientTravelApi } from '../apis/patient-travel';
 import { PatientTravel } from '../value-objects/patient-travel';
 import { LocalStorage } from '../../infrastructure/storage/local-storage';
@@ -5,6 +6,7 @@ import { LocalStorage } from '../../infrastructure/storage/local-storage';
 export class PatientTravelRepository {
   static CACHE_KEY = 'patient_travels'
 
+  // 加载患者行程数据并缓存到本地
   static async reload() {
     let data = await PatientTravelApi.list()
     LocalStorage.setJson(this.CACHE_KEY, data)
@@ -12,11 +14,13 @@ export class PatientTravelRepository {
     console.log(data.slice(0, 2))
   }
 
+  // 返回所有的患者行程数据
   static list() {
     let travels = []
 
     let travelsApiResults = LocalStorage.getJson(this.CACHE_KEY)
 
+    // 将原始的患者行程数据转化为项目使用的患者行程类
     for (const travelApiData of travelsApiResults) {
       let detail = ''
       if (travelApiData.t_start)
