@@ -16,9 +16,9 @@
 
 参见 [deployment.md](deployment.md)
 
-## 开发说明
+## 贡献指南
 
-* 可以通过提交 pr 的方式参与贡献
+参见 [contributing.md](contributing.md)
 
 ## Bug 反馈
 
@@ -28,9 +28,13 @@
 
 longlyshidenggui@gmail.com
 
+## 变更日志
+
+参见 [changelog.md](changelog.md)
+
 ## LICENSE
 
-[MIT](LISCENSE)
+[MIT](LICENSE)
 
 
 ## 技术框架
